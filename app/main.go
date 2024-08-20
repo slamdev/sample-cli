@@ -12,7 +12,7 @@ import (
 	"github.com/skovtunenko/graterm"
 )
 
-var Version = "development"
+var version = "will-come-from-ld-flags"
 
 type args struct {
 	GracePeriod time.Duration `arg:"--grace-period, -g, env:GRACE_PERIOD" default:"5s"    help:"grace period for termination" placeholder:"duration"`
@@ -20,7 +20,7 @@ type args struct {
 }
 
 func (args) Version() string {
-	return Version
+	return version
 }
 
 func (args) Description() string {

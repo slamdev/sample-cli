@@ -13,3 +13,9 @@ mod:
 
 mod-upgrade:
 	go get -u
+
+publish:
+ifeq (, $(shell which ko))
+	$(error ko binary is not found in path; install it from https://ko.build/install/)
+endif
+	KO_DOCKER_REPO='ghcr.io/slamdev/sample-cli' ko build --bare --tags=$${GIT_TAG:-develop}
