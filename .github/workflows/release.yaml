@@ -37,6 +37,7 @@ jobs:
 ##        env:
 ##          GIT_TAG: ${{ github.ref_name }}
       - run: |
+          docker pull alpine
           docker tag alpine ghcr.io/slamdev/sample-cli:develop
           docker push ghcr.io/slamdev/sample-cli:develop
         working-directory: app
