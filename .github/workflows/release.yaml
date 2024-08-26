@@ -32,7 +32,11 @@ jobs:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
-      - run: make publish
+#      - run: make publish
+#        working-directory: app
+##        env:
+##          GIT_TAG: ${{ github.ref_name }}
+      - run: |
+          docker tag alpine ghcr.io/slamdev/sample-cli:develop
+          docker push ghcr.io/slamdev/sample-cli:develop
         working-directory: app
-#        env:
-#          GIT_TAG: ${{ github.ref_name }}
