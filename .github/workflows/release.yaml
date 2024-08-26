@@ -14,7 +14,9 @@ concurrency:
 jobs:
   release:
     runs-on: ubuntu-latest
-    permissions: { packages: write }
+    permissions:
+      packages: write
+      id-token: write
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-go@v5
