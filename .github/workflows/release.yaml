@@ -11,10 +11,14 @@ defaults: { run: { shell: bash } }
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: false
-permissions: write-all
 jobs:
   release:
     runs-on: ubuntu-latest
+    permissions:
+      packages: write
+#      id-token: write
+#      contents: write
+#      attestations: write
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-go@v5
@@ -22,22 +26,9 @@ jobs:
           cache-dependency-path: app/go.sum
           go-version-file: app/go.mod
       - uses: ko-build/setup-ko@v0.6
-        env:
-          KO_DOCKER_REPO: ghcr.io/slamdev/sample-cli
         with:
           version: v0.16.0
-      - name: Login to GitHub Container Registry
-        uses: docker/login-action@v3
-        with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-#      - run: make publish
-#        working-directory: app
-##        env:
-##          GIT_TAG: ${{ github.ref_name }}
-      - run: |
-          docker pull alpine
-          docker tag alpine ghcr.io/slamdev/sample-cli:develop
-          docker push ghcr.io/slamdev/sample-cli:develop
+      - run: make publish
         working-directory: app
+        env:
+          GIT_TAG: ${{ github.ref_name }}
